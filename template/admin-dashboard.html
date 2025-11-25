@@ -8,107 +8,112 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1>Admin Dashboard</h1>
-        <button onclick="handleAdminLogout()">Logout</button>
-        <form method="GET" action="/admin/dashboard">
-            <input type="text" name="q" placeholder="Search users..." value="{{ .search }}">
-            <button type="submit">Search</button>
-        </form>
-
-        <button onclick="toggleCreate()">Create User</button>
-        <hr>
-
+    <main class="container">
+        <section>
+            <h1>Admin Dashboard</h1>
+            <button onclick="handleAdminLogout()">Logout</button>
+            <form method="GET" action="/admin/dashboard">
+                <input type="text" name="q" placeholder="Search users..." value="{{ .search }}">
+                <button type="submit">Search</button>
+            </form>
+            <button onclick="toggleCreate()">Create User</button>
+            <hr>
+        </section>
         <h2>User List</h2>
 
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Actions</th>
-            </tr>
+        <section>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
 
-            {{range .users}}
-            <tr>
-                <td>{{.ID}}</td>
-                <td>{{.Name}}</td>
-                <td>{{.Email}}</td>
-                <td>{{.Role}}</td>
-                <td>
-                    <a href="/admin/dashboard?edit={{.ID}}">Edit</a>
-                    <a href="/admin/delete/{{.ID}}" onclick="return confirm('Delete user?')">Delete</a>
-                </td>
-            </tr>
-            {{end}}
-        </table>
+                {{range .users}}
+                <tr>
+                    <td>{{.ID}}</td>
+                    <td>{{.Name}}</td>
+                    <td>{{.Email}}</td>
+                    <td>{{.Role}}</td>
+                    <td>
+                        <a href="/admin/dashboard?edit={{.ID}}">Edit</a>
+                        <a href="/admin/delete/{{.ID}}" onclick="return confirm('Delete user?')">Delete</a>
+                    </td>
+                </tr>
+                {{end}}
+            </table>
 
-        <hr>
+            <hr>
+        </section>
 
         {{ if .editUser }}
+        <section>
+            <h2>Edit User</h2>
 
-        <h2>Edit User</h2>
+            <form id="update-user" method="POST" action="/admin/update">
+                <input type="hidden" name="id" value="{{ .editUser.ID }}">
 
-        <form id="update-user" method="POST" action="/admin/update">
-            <input type="hidden" name="id" value="{{ .editUser.ID }}">
+                <label>Name:</label>
+                <input type="text" name="name" value="{{ .editUser.Name }}">
 
-            <label>Name:</label>
-            <input type="text" name="name" value="{{ .editUser.Name }}">
+                <label>Email:</label>
+                <input type="email" name="email" value="{{ .editUser.Email }}">
 
-            <label>Email:</label>
-            <input type="email" name="email" value="{{ .editUser.Email }}">
+                <label>Role:</label>
+                <select name="role">
+                    <option value="user" {{ if eq .editUser.Role "user" }}selected{{ end }}>User</option>
+                    <option value="admin" {{ if eq .editUser.Role "admin" }}selected{{ end }}>Admin</option>
+                </select>
+                <hr>
 
-            <label>Role:</label>
-            <select name="role">
-                <option value="user" {{ if eq .editUser.Role "user" }}selected{{ end }}>User</option>
-                <option value="admin" {{ if eq .editUser.Role "admin" }}selected{{ end }}>Admin</option>
-            </select>
-            <hr>
+                <h3>Change Password</h3>
+                <p style="color: gray;">
+                    Leave password fields empty if you do not want to change the password.
+                </p>
 
-            <h3>Change Password</h3>
-            <p style="color: gray;">
-                Leave password fields empty if you do not want to change the password.
-            </p>
+                <label>New Password:</label>
+                <input type="password" name="new-password" id="new_password">
 
-            <label>New Password:</label>
-            <input type="password" name="new-password" id="new_password">
+                <label>Confirm Password:</label>
+                <input type="password" name="confirm-password" id="confirm_password">
 
-            <label>Confirm Password:</label>
-            <input type="password" name="confirm-password" id="confirm_password">
+                <button type="submit">Update User</button>
+            </form>
 
-            <button type="submit">Update User</button>
-        </form>
+            {{ end }}
+        </section>
 
-        {{ end }}
+        <section>
 
-        {{ if .createUser }}
+            {{ if .createUser }}
 
-        <h2>Create New User</h2>
+            <h2>Create New User</h2>
 
-        <form method="POST" action="/admin/create">
-            <label>Name:</label>
-            <input type="text" name="name" required>
+            <form method="POST" action="/admin/create">
+                <label>Name:</label>
+                <input type="text" name="name" required>
 
-            <label>Email:</label>
-            <input type="email" name="email" required>
+                <label>Email:</label>
+                <input type="email" name="email" required>
 
-            <h3>Set Password</h3>
+                <h3>Set Password</h3>
 
-            <label>Password:</label>
-            <input type="password" id="new_user_password" name="password" required>
+                <label>Password:</label>
+                <input type="password" id="new_user_password" name="password" required>
 
-            <label>Confirm Password:</label>
-            <input type="password" id="confirm_new_user_password" name="confirm" required>
+                <label>Confirm Password:</label>
+                <input type="password" id="confirm_new_user_password" name="confirm" required>
 
-            <button type="submit">Create User</button>
-        </form>
-
-
-        {{ end }}
+                <button type="submit">Create User</button>
+            </form>
 
 
-    </div>
+            {{ end }}
+        </section>
+
+    </main>
     <script src="/static/scripts.js"></script>
 </body>
 

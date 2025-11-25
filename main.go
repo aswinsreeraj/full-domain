@@ -36,6 +36,8 @@ func main() {
 	store.Options(sessions.Options{
 		Path:     "/",
 		HttpOnly: true,
+		Secure:   true,
+		MaxAge:   3600,
 	})
 
 	r.Use(sessions.SessionsMany([]string{
@@ -93,8 +95,8 @@ func main() {
 	admin.Use(middleware.AdminRequired(), middleware.CacheClear())
 	{
 		admin.GET("/dashboard", handlers.AdminDashboardHandler(userService))
-		admin.POST("/update", handlers.AdminUpdateUserHandler(userService))
-		admin.GET("/delete/:id", handlers.AdminDeleteUserHandler(userService))
+		admin.PATCH("/update", handlers.AdminUpdateUserHandler(userService))
+		admin.DELETE("/delete/:id", handlers.AdminDeleteUserHandler(userService))
 		admin.POST("/logout", handlers.AdminLogoutHandler(userService))
 		admin.POST("/create", handlers.AdminCreateUserHandler(userService))
 	}

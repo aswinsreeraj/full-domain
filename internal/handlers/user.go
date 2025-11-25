@@ -3,6 +3,8 @@ package handlers
 import (
 	"full-domain/internal/services"
 	"net/http"
+	"regexp"
+	"strings"
 	"time"
 
 	"github.com/gin-contrib/sessions"
@@ -14,6 +16,19 @@ func SignupHandler(userService services.UserService) gin.HandlerFunc {
 		name := c.PostForm("name")
 		email := c.PostForm("email")
 		password := c.PostForm("password")
+
+		if strings.TrimSpace(password) == "" {
+			c.String(http.StatusBadRequest, "Password cannot be empty.")
+			return
+		}
+
+		passwordRegex := regexp.MustCompile(`^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>_\-])[A-Za-z\d!@#$%^&*(),.?":{}|<>_\-]{8,}$`)
+
+		if !passwordRegex.MatchString(password) {
+			c.String(http.StatusBadRequest, "Password must be at least 8 characters long and include uppercase, lowercase, digit, and special character.")
+			return
+		}
+
 		if userService.CreateUser(name, email, password) != nil {
 			c.String(http.StatusInternalServerError, "Error")
 			return

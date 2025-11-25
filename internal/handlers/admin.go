@@ -61,7 +61,7 @@ func AdminUpdateUserHandler(userService services.UserService) gin.HandlerFunc {
 
 		err := userService.UpdateUser(id, name, email, role, pass)
 		if err != nil {
-			c.String(500, "Error updating user")
+			c.String(http.StatusInternalServerError, "Error updating user")
 			return
 		}
 
@@ -75,7 +75,7 @@ func AdminDeleteUserHandler(userService services.UserService) gin.HandlerFunc {
 
 		err := userService.DeleteUser(id)
 		if err != nil {
-			c.String(500, "Error deleting user")
+			c.String(http.StatusInternalServerError, "Error deleting user")
 			return
 		}
 
