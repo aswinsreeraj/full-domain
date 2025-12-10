@@ -9,3 +9,15 @@ time=2025-12-04T14:13:56.275+05:30 level=INFO msg="authenticating user" email=ad
 time=2025-12-04T14:13:57.540+05:30 level=WARN msg="unauthenticated request" path=/home
 time=2025-12-04T14:14:13.227+05:30 level=INFO msg="user login attempt" email=aswinsreeraj96@gmail.com
 time=2025-12-04T14:14:13.227+05:30 level=INFO msg="authenticating user" email=aswinsreeraj96@gmail.com
+time=2025-12-04T15:31:45.897+05:30 level=INFO msg="starting application"
+time=2025-12-04T15:31:45.904+05:30 level=INFO msg="Loading env file"
+time=2025-12-04T15:31:45.904+05:30 level=ERROR msg="failed to load env" error="open .env: no such file or directory"
+time=2025-12-04T15:31:45.904+05:30 level=INFO msg="connecting to database"
+time=2025-12-04T15:31:45.907+05:30 level=ERROR msg="database connection error" error="failed to connect to `user=root database=`: /var/run/postgresql/.s.PGSQL.5432 (/var/run/postgresql): server error: FATAL: role \"root\" does not exist (SQLSTATE 28000)"
+time=2025-12-04T15:31:45.907+05:30 level=ERROR msg="database connection failed" error="failed to connect to `user=root database=`: /var/run/postgresql/.s.PGSQL.5432 (/var/run/postgresql): server error: FATAL: role \"root\" does not exist (SQLSTATE 28000)"
+time=2025-12-04T15:32:13.613+05:30 level=INFO msg="starting application"
+time=2025-12-04T15:32:13.613+05:30 level=INFO msg="Loading env file"
+time=2025-12-04T15:32:13.613+05:30 level=INFO msg="connecting to database"
+time=2025-12-10T10:20:41.831+05:30 level=INFO msg="starting application"
+time=2025-12-10T10:20:41.833+05:30 level=INFO msg="Loading env file"
+time=2025-12-10T10:20:41.835+05:30 level=INFO msg="connecting to database"

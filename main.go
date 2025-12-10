@@ -58,6 +58,7 @@ func main() {
 		"admin_session",
 	}, store))
 
+	r.Use(middleware.RequestID())
 	r.Use(middleware.CacheClear())
 
 	r.GET("/", func(c *gin.Context) {

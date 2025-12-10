@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"full-domain/internal/lumberjack"
 	"full-domain/internal/services"
+	"log/slog"
 	"net/http"
 	"regexp"
 	"strings"
@@ -48,8 +48,9 @@ func SignupHandler(userService services.UserService) gin.HandlerFunc {
 
 func LoginHandler(userService services.UserService) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		ctx := c.Request.Context()
 		email := c.PostForm("email")
-		lumberjack.Logger.Info("user login attempt", "email", email)
+		slog.InfoContext(ctx, "user login attempt", "email", email)
 		password := c.PostForm("password")
 		user, err := userService.Authenticate(email, password)
 		if err != nil {
