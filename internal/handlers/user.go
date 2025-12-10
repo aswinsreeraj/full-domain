@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"full-domain/internal/lumberjack"
 	"full-domain/internal/services"
 	"net/http"
 	"regexp"
@@ -22,10 +23,18 @@ func SignupHandler(userService services.UserService) gin.HandlerFunc {
 			return
 		}
 
-		passwordRegex := regexp.MustCompile(`^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>_\-])[A-Za-z\d!@#$%^&*(),.?":{}|<>_\-]{8,}$`)
+		lowercase := regexp.MustCompile(`[a-z]`)
+		uppercase := regexp.MustCompile(`[A-Z]`)
+		digit := regexp.MustCompile(`\d`)
+		special := regexp.MustCompile(`[!@#$%^&*(),.?":{}|<>_\-]`)
 
-		if !passwordRegex.MatchString(password) {
-			c.String(http.StatusBadRequest, "Password must be at least 8 characters long and include uppercase, lowercase, digit, and special character.")
+		if len(password) < 8 ||
+			!lowercase.MatchString(password) ||
+			!uppercase.MatchString(password) ||
+			!digit.MatchString(password) ||
+			!special.MatchString(password) {
+			c.String(http.StatusBadRequest,
+				"Password must be at least 8 characters long and include uppercase, lowercase, digit, and special character.")
 			return
 		}
 
@@ -40,6 +49,7 @@ func SignupHandler(userService services.UserService) gin.HandlerFunc {
 func LoginHandler(userService services.UserService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		email := c.PostForm("email")
+		lumberjack.Logger.Info("user login attempt", "email", email)
 		password := c.PostForm("password")
 		user, err := userService.Authenticate(email, password)
 		if err != nil {
@@ -51,6 +61,7 @@ func LoginHandler(userService services.UserService) gin.HandlerFunc {
 
 		if userService.Update(user) != nil {
 			c.String(http.StatusInternalServerError, "Error")
+			c.Redirect(http.StatusFound, "/")
 			return
 		}
 

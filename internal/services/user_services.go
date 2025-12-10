@@ -2,6 +2,7 @@ package services
 
 import (
 	"full-domain/internal/database"
+	"full-domain/internal/lumberjack"
 	"full-domain/internal/models"
 	"strconv"
 
@@ -48,8 +49,10 @@ func (s *userService) CreateUser(name, email, password string) error {
 }
 
 func (s *userService) Authenticate(email, password string) (*models.User, error) {
+	lumberjack.Logger.Info("authenticating user", "email", email)
 	user, err := s.repo.FindByEmail(email)
 	if err != nil {
+		lumberjack.Logger.Warn("authentication failed: user not found", "email", email)
 		return nil, err
 	}
 
@@ -99,6 +102,7 @@ func (s *userService) FindByIDString(id string) (*models.User, error) {
 }
 
 func (s *userService) UpdateUser(id, name, email, role, password string) error {
+	lumberjack.Logger.Info("admin updating user", "id", id, "role", role)
 	uid, err := strconv.ParseUint(id, 10, 64)
 	if err != nil {
 		return err

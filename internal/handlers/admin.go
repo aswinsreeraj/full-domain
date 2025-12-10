@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"full-domain/internal/lumberjack"
 	"full-domain/internal/models"
 	"full-domain/internal/services"
 	"net/http"
@@ -11,7 +12,9 @@ import (
 
 func AdminLoginHandler(userService services.UserService) gin.HandlerFunc {
 	return func(c *gin.Context) {
+
 		email := c.PostForm("email")
+		lumberjack.Logger.Info("user login attempt", "email", email)
 		password := c.PostForm("password")
 
 		user, err := userService.Authenticate(email, password)
@@ -72,6 +75,7 @@ func AdminUpdateUserHandler(userService services.UserService) gin.HandlerFunc {
 func AdminDeleteUserHandler(userService services.UserService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id := c.Param("id")
+		lumberjack.Logger.Info("admin delete user", "id", id)
 
 		err := userService.DeleteUser(id)
 		if err != nil {

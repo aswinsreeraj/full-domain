@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"full-domain/internal/lumberjack"
 	"net/http"
 
 	"github.com/gin-contrib/sessions"
@@ -13,6 +14,7 @@ func AdminRequired() gin.HandlerFunc {
 
 		role := session.Get("role")
 		if role == nil || role.(string) != "admin" {
+			lumberjack.Logger.Warn("unauthorized admin access", "path", c.FullPath())
 			c.Redirect(http.StatusFound, "/admin/login")
 			c.Abort()
 			return

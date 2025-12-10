@@ -3,6 +3,7 @@ package middleware
 import (
 	"net/http"
 
+	"full-domain/internal/lumberjack"
 	"full-domain/internal/services"
 
 	"github.com/gin-contrib/sessions"
@@ -16,6 +17,7 @@ func AuthRequired(userService services.UserService) gin.HandlerFunc {
 
 		email := session.Get("email")
 		if email == nil {
+			lumberjack.Logger.Warn("unauthenticated request", "path", c.FullPath())
 			session.Clear()
 			session.Save()
 			c.Redirect(http.StatusFound, "/")

@@ -39,7 +39,11 @@
                     <td>{{.Role}}</td>
                     <td>
                         <a href="/admin/dashboard?edit={{.ID}}">Edit</a>
-                        <a href="/admin/delete/{{.ID}}" onclick="return confirm('Delete user?')">Delete</a>
+                        <form action="/admin/delete/{{.ID}}" method="GET" style="display:inline;"
+                            onsubmit="return confirm('Delete user?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 {{end}}

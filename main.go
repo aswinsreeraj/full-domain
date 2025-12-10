@@ -3,9 +3,11 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"full-domain/internal/database"
 	"full-domain/internal/handlers"
+	"full-domain/internal/lumberjack"
 	"full-domain/internal/middleware"
 	"full-domain/internal/services"
 
@@ -16,12 +18,23 @@ import (
 )
 
 func main() {
+
+	logFile, err := os.OpenFile("app.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		panic("failed to create log file: " + err.Error())
+	}
+	defer logFile.Close()
+
+	lumberjack.Init(logFile)
+	lumberjack.Logger.Info("starting application")
+
+	lumberjack.Logger.Info("Loading env file")
 	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
+		lumberjack.Logger.Error("failed to load env", "error", err)
 	}
 
 	if err := database.Connect(); err != nil {
-		log.Fatal("Failed to connect to database:", err)
+		lumberjack.Logger.Error("database connection failed", "error", err)
 	}
 
 	userRepo := database.NewUserRepository(database.DB)
@@ -59,6 +72,13 @@ func main() {
 	})
 
 	r.GET("/signup", func(c *gin.Context) {
+
+		session := sessions.DefaultMany(c, "user_session")
+		if session.Get("email") != nil && session.Get("role") == "user" {
+			c.Redirect(http.StatusFound, "/home")
+			return
+		}
+
 		c.HTML(http.StatusOK, "signup.html", nil)
 	})
 
@@ -95,8 +115,8 @@ func main() {
 	admin.Use(middleware.AdminRequired(), middleware.CacheClear())
 	{
 		admin.GET("/dashboard", handlers.AdminDashboardHandler(userService))
-		admin.PATCH("/update", handlers.AdminUpdateUserHandler(userService))
-		admin.DELETE("/delete/:id", handlers.AdminDeleteUserHandler(userService))
+		admin.POST("/update", handlers.AdminUpdateUserHandler(userService))
+		admin.GET("/delete/:id", handlers.AdminDeleteUserHandler(userService))
 		admin.POST("/logout", handlers.AdminLogoutHandler(userService))
 		admin.POST("/create", handlers.AdminCreateUserHandler(userService))
 	}
