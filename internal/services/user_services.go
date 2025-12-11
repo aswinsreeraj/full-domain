@@ -1,6 +1,7 @@
 package services
 
 import (
+	"context"
 	"full-domain/internal/database"
 	"full-domain/internal/lumberjack"
 	"full-domain/internal/models"
@@ -11,12 +12,12 @@ import (
 
 type UserService interface {
 	CreateUser(name, email, password string) error
-	Authenticate(email, password string) (*models.User, error)
+	Authenticate(ctx context.Context, email, password string) (*models.User, error)
 	Update(user *models.User) error
 	UpdatePassword(email, oldPassword, newPassword string) error
 	SearchUsers(query string) ([]models.User, error)
 	FindByIDString(id string) (*models.User, error)
-	UpdateUser(id, name, email, role, password string) error
+	UpdateUser(ctx context.Context, id, name, email, role, password string) error
 	DeleteUser(id string) error
 	FindByEmail(email string) (*models.User, error)
 }
@@ -48,14 +49,15 @@ func (s *userService) CreateUser(name, email, password string) error {
 	return nil
 }
 
-func (s *userService) Authenticate(email, password string) (*models.User, error) {
-	lumberjack.Logger.Info("authenticating user", "email", email)
+func (s *userService) Authenticate(ctx context.Context, email, password string) (*models.User, error) {
+	logger := lumberjack.FromContext(ctx)
+	logger.Info("authenticating user", "email", email)
+
 	user, err := s.repo.FindByEmail(email)
 	if err != nil {
-		lumberjack.Logger.Warn("authentication failed: user not found", "email", email)
+		logger.Warn("authentication failed: user not found", "email", email)
 		return nil, err
 	}
-
 	if err := bcrypt.CompareHashAndPassword([]byte(user.HashedPassword), []byte(password)); err != nil {
 		return nil, err
 	}
@@ -101,8 +103,9 @@ func (s *userService) FindByIDString(id string) (*models.User, error) {
 	return s.repo.FindByID(uint(uid))
 }
 
-func (s *userService) UpdateUser(id, name, email, role, password string) error {
-	lumberjack.Logger.Info("admin updating user", "id", id, "role", role)
+func (s *userService) UpdateUser(ctx context.Context, id, name, email, role, password string) error {
+	logger := lumberjack.FromContext(ctx)
+	logger.Info("admin updating user", "id", id, "role", role)
 	uid, err := strconv.ParseUint(id, 10, 64)
 	if err != nil {
 		return err

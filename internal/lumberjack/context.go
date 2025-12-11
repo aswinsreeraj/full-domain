@@ -5,9 +5,7 @@ import (
 	"log/slog"
 )
 
-type ctxKey string
-
-const loggerKey ctxKey = "logger"
+var loggerKey string = "logger"
 
 func WithLogger(ctx context.Context, logger *slog.Logger) context.Context {
 	return context.WithValue(ctx, loggerKey, logger)

@@ -10,11 +10,13 @@ import (
 
 func AdminRequired() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		session := sessions.DefaultMany(c, "admin_session")
+		logger := lumberjack.FromContext(c.Request.Context())
 
+		session := sessions.DefaultMany(c, "admin_session")
 		role := session.Get("role")
+
 		if role == nil || role.(string) != "admin" {
-			lumberjack.Logger.Warn("unauthorized admin access", "path", c.FullPath())
+			logger.Warn("unauthorized admin access", "path", c.FullPath())
 			c.Redirect(http.StatusFound, "/admin/login")
 			c.Abort()
 			return

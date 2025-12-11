@@ -12,7 +12,7 @@ type ContextHandler struct {
 }
 
 func Init(w io.Writer) {
-	handler := slog.NewTextHandler(w, nil)
+	handler := slog.NewJSONHandler(w, nil)
 	logger := slog.New(handler)
 
 	Logger = logger

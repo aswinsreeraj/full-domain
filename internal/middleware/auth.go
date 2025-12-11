@@ -12,12 +12,13 @@ import (
 
 func AuthRequired(userService services.UserService) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		logger := lumberjack.FromContext(c.Request.Context())
 
 		session := sessions.DefaultMany(c, "user_session")
-
 		email := session.Get("email")
+
 		if email == nil {
-			lumberjack.Logger.Warn("unauthenticated request", "path", c.FullPath())
+			logger.Warn("unauthenticated request", "path", c.FullPath())
 			session.Clear()
 			session.Save()
 			c.Redirect(http.StatusFound, "/")
@@ -27,6 +28,7 @@ func AuthRequired(userService services.UserService) gin.HandlerFunc {
 
 		user, err := userService.FindByEmail(email.(string))
 		if err != nil || user == nil {
+			logger.Warn("auth user not found", "email", email)
 			session.Clear()
 			session.Save()
 			c.Redirect(http.StatusFound, "/")

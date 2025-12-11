@@ -1,8 +1,8 @@
 package handlers
 
 import (
+	"full-domain/internal/lumberjack"
 	"full-domain/internal/services"
-	"log/slog"
 	"net/http"
 	"regexp"
 	"strings"
@@ -40,6 +40,7 @@ func SignupHandler(userService services.UserService) gin.HandlerFunc {
 
 		if userService.CreateUser(name, email, password) != nil {
 			c.String(http.StatusInternalServerError, "Error")
+			c.Redirect(http.StatusFound, "/signup")
 			return
 		}
 		c.Redirect(http.StatusFound, "/")
@@ -49,19 +50,22 @@ func SignupHandler(userService services.UserService) gin.HandlerFunc {
 func LoginHandler(userService services.UserService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := c.Request.Context()
+		logger := lumberjack.FromContext(ctx)
+
 		email := c.PostForm("email")
-		slog.InfoContext(ctx, "user login attempt", "email", email)
+		logger.Info("user login attempt", "email", email)
 		password := c.PostForm("password")
-		user, err := userService.Authenticate(email, password)
+		user, err := userService.Authenticate(c.Request.Context(), email, password)
 		if err != nil {
-			c.String(http.StatusInternalServerError, "Error")
+			// c.String(http.StatusInternalServerError, "Error")
+			c.Redirect(http.StatusFound, "/")
 			return
 		}
 		now := time.Now()
 		user.LastLogin = &now
 
 		if userService.Update(user) != nil {
-			c.String(http.StatusInternalServerError, "Error")
+			// c.String(http.StatusInternalServerError, "Error")
 			c.Redirect(http.StatusFound, "/")
 			return
 		}

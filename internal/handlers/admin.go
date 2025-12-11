@@ -13,13 +13,18 @@ import (
 func AdminLoginHandler(userService services.UserService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
+		logger := lumberjack.FromContext(c.Request.Context())
+
 		email := c.PostForm("email")
-		lumberjack.Logger.Info("user login attempt", "email", email)
+		logger.Info("user login attempt", "email", email)
 		password := c.PostForm("password")
 
-		user, err := userService.Authenticate(email, password)
+		user, err := userService.Authenticate(c.Request.Context(), email, password)
+
 		if err != nil || user.Role != "admin" {
-			c.String(http.StatusUnauthorized, "Invalid credentials")
+			logger.Error("invalid admin login attempt", "email", email, "error", err)
+			// c.String(http.StatusUnauthorized, "Invalid credentials")
+			c.Redirect(http.StatusFound, "/admin/login")
 			return
 		}
 		session := sessions.DefaultMany(c, "admin_session")
@@ -62,7 +67,7 @@ func AdminUpdateUserHandler(userService services.UserService) gin.HandlerFunc {
 		role := c.PostForm("role")
 		pass := c.PostForm("new-password")
 
-		err := userService.UpdateUser(id, name, email, role, pass)
+		err := userService.UpdateUser(c.Request.Context(), id, name, email, role, pass)
 		if err != nil {
 			c.String(http.StatusInternalServerError, "Error updating user")
 			return
@@ -74,11 +79,14 @@ func AdminUpdateUserHandler(userService services.UserService) gin.HandlerFunc {
 
 func AdminDeleteUserHandler(userService services.UserService) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		logger := lumberjack.FromContext(c.Request.Context())
+
 		id := c.Param("id")
-		lumberjack.Logger.Info("admin delete user", "id", id)
+		logger.Info("admin delete user", "id", id)
 
 		err := userService.DeleteUser(id)
 		if err != nil {
+			logger.Error("error deleting user", "error", err)
 			c.String(http.StatusInternalServerError, "Error deleting user")
 			return
 		}
