@@ -7,9 +7,9 @@ import (
 
 var Logger *slog.Logger
 
-type ContextHandler struct {
-	slog.Handler
-}
+// type ContextHandler struct {
+// 	slog.Handler
+// }
 
 func Init(w io.Writer) {
 	handler := slog.NewJSONHandler(w, nil)

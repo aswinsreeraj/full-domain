@@ -1,0 +1,9 @@
+#Logs
+*.log
+
+# Environment variable
+.env
+env
+
+#Go files
+go.*

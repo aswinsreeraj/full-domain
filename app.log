@@ -1,35 +1,12 @@
-{"time":"2025-12-10T13:59:20.795108536+05:30","level":"INFO","msg":"starting application"}
-{"time":"2025-12-10T13:59:20.795387246+05:30","level":"INFO","msg":"Loading env file"}
-{"time":"2025-12-10T13:59:20.796415854+05:30","level":"INFO","msg":"connecting to database"}
-{"time":"2025-12-10T13:59:31.360681789+05:30","level":"WARN","msg":"unauthorized admin access","request_id":"2bf81262-18f9-4405-a79b-6cb25e17b114","path":"/admin/dashboard"}
-{"time":"2025-12-10T13:59:42.555579813+05:30","level":"INFO","msg":"user login attempt","request_id":"72d35747-20c5-4788-9b8f-4640acfb591f","email":"aswinsreeraj96@gmail.com"}
-{"time":"2025-12-10T13:59:42.555956199+05:30","level":"INFO","msg":"authenticating user","request_id":"72d35747-20c5-4788-9b8f-4640acfb591f","email":"aswinsreeraj96@gmail.com"}
-{"time":"2025-12-10T13:59:47.564719109+05:30","level":"INFO","msg":"user login attempt","request_id":"e109f584-04e1-417b-bb23-ee0c78852277","email":"hello@world.com"}
-{"time":"2025-12-10T13:59:47.564772165+05:30","level":"INFO","msg":"authenticating user","request_id":"e109f584-04e1-417b-bb23-ee0c78852277","email":"hello@world.com"}
-{"time":"2025-12-10T13:59:47.565694216+05:30","level":"WARN","msg":"authentication failed: user not found","request_id":"e109f584-04e1-417b-bb23-ee0c78852277","email":"hello@world.com"}
-{"time":"2025-12-10T14:24:33.983641559+05:30","level":"INFO","msg":"starting application"}
-{"time":"2025-12-10T14:24:33.994600843+05:30","level":"INFO","msg":"Loading env file"}
-{"time":"2025-12-10T14:24:33.995100371+05:30","level":"INFO","msg":"connecting to database"}
-{"time":"2025-12-10T14:24:43.664303298+05:30","level":"INFO","msg":"user login attempt","request_id":"7cf5cf05-f341-4703-a455-b07b22351dc2","email":"aswinsreeraj96@gmail.com"}
-{"time":"2025-12-10T14:24:43.664365519+05:30","level":"INFO","msg":"authenticating user","request_id":"7cf5cf05-f341-4703-a455-b07b22351dc2","email":"aswinsreeraj96@gmail.com"}
-{"time":"2025-12-10T14:26:03.006151312+05:30","level":"INFO","msg":"user login attempt","request_id":"b12ef7f1-d9a8-4163-8479-6a3e8cdbfadb","email":"aswinsreeraj96@gmail.com"}
-{"time":"2025-12-10T14:26:03.006835576+05:30","level":"INFO","msg":"authenticating user","request_id":"b12ef7f1-d9a8-4163-8479-6a3e8cdbfadb","email":"aswinsreeraj96@gmail.com"}
-{"time":"2025-12-10T14:27:36.020101101+05:30","level":"INFO","msg":"starting application"}
-{"time":"2025-12-10T14:27:36.020212228+05:30","level":"INFO","msg":"Loading env file"}
-{"time":"2025-12-10T14:27:36.020618411+05:30","level":"INFO","msg":"connecting to database"}
-{"time":"2025-12-10T14:27:42.159881805+05:30","level":"INFO","msg":"user login attempt","request_id":"6feb1045-0948-455c-b2f8-a2e538e1f6c8","email":"aswinsreeraj96@gmail.com"}
-{"time":"2025-12-10T14:27:42.159938955+05:30","level":"INFO","msg":"authenticating user","request_id":"6feb1045-0948-455c-b2f8-a2e538e1f6c8","email":"aswinsreeraj96@gmail.com"}
-{"time":"2025-12-10T14:29:11.463562302+05:30","level":"INFO","msg":"user login attempt","request_id":"2c3fa9cd-d002-4331-b82a-9d1e86f607d3","email":"aswinsreeraj96@gmail.com"}
-{"time":"2025-12-10T14:29:11.46462388+05:30","level":"INFO","msg":"authenticating user","request_id":"2c3fa9cd-d002-4331-b82a-9d1e86f607d3","email":"aswinsreeraj96@gmail.com"}
-{"time":"2025-12-10T14:29:28.157399383+05:30","level":"INFO","msg":"user login attempt","request_id":"9a7cf3a3-adb4-43e1-a400-e8e59d586235","email":"admin@example.com"}
-{"time":"2025-12-10T14:29:28.157454276+05:30","level":"INFO","msg":"authenticating user","request_id":"9a7cf3a3-adb4-43e1-a400-e8e59d586235","email":"admin@example.com"}
-{"time":"2025-12-11T16:21:48.890670442+05:30","level":"INFO","msg":"starting application"}
-{"time":"2025-12-11T16:21:48.901973+05:30","level":"INFO","msg":"Loading env file"}
-{"time":"2025-12-11T16:21:48.903566187+05:30","level":"INFO","msg":"connecting to database"}
-{"time":"2025-12-11T16:22:11.818883088+05:30","level":"INFO","msg":"user login attempt","request_id":"23439e35-4b05-46cc-970a-0d37f49709e0","email":"aswinsreeraj96@gmail.com"}
-{"time":"2025-12-11T16:22:11.819093923+05:30","level":"INFO","msg":"authenticating user","request_id":"23439e35-4b05-46cc-970a-0d37f49709e0","email":"aswinsreeraj96@gmail.com"}
-{"time":"2025-12-11T16:22:19.378817603+05:30","level":"INFO","msg":"user login attempt","request_id":"03627d34-32fc-4650-b1e6-bf6307f66d8b","email":"aswinsreeraj96@gmail.com"}
-{"time":"2025-12-11T16:22:19.379011221+05:30","level":"INFO","msg":"authenticating user","request_id":"03627d34-32fc-4650-b1e6-bf6307f66d8b","email":"aswinsreeraj96@gmail.com"}
-{"time":"2025-12-11T16:22:19.434036571+05:30","level":"ERROR","msg":"invalid admin login attempt","request_id":"03627d34-32fc-4650-b1e6-bf6307f66d8b","email":"aswinsreeraj96@gmail.com","error":null}
-{"time":"2025-12-11T16:22:47.346740868+05:30","level":"INFO","msg":"user login attempt","request_id":"c0bb7a93-fcbb-4ff1-9d19-c765888a31f9","email":"admin@example.com"}
-{"time":"2025-12-11T16:22:47.346931539+05:30","level":"INFO","msg":"authenticating user","request_id":"c0bb7a93-fcbb-4ff1-9d19-c765888a31f9","email":"admin@example.com"}
+{"time":"2025-12-11T16:39:00.187239195+05:30","level":"INFO","msg":"user login attempt","request_id":"7987c297-dfcb-4522-98c4-9e6aa2f5f78e","email":"admin@example.com"}
+{"time":"2025-12-11T16:39:00.188240511+05:30","level":"INFO","msg":"authenticating user","request_id":"7987c297-dfcb-4522-98c4-9e6aa2f5f78e","email":"admin@example.com"}
+{"time":"2025-12-11T16:39:13.61087963+05:30","level":"INFO","msg":"user login attempt","request_id":"74ab1af9-f259-41a2-bae1-b96e8ced0808","email":"aswinsreeraj96@gmail.com"}
+{"time":"2025-12-11T16:39:13.611032863+05:30","level":"INFO","msg":"authenticating user","request_id":"74ab1af9-f259-41a2-bae1-b96e8ced0808","email":"aswinsreeraj96@gmail.com"}
+{"time":"2025-12-11T17:13:19.346662881+05:30","level":"INFO","msg":"starting application"}
+{"time":"2025-12-11T17:13:19.357235463+05:30","level":"INFO","msg":"Loading env file"}
+{"time":"2025-12-11T17:13:19.357772844+05:30","level":"INFO","msg":"connecting to database"}
+{"time":"2025-12-11T17:13:19.359968673+05:30","level":"ERROR","msg":"database connection error","error":"failed to connect to `user=admin database=userdb`:\n\t[::1]:5432 (localhost): dial error: dial tcp [::1]:5432: connect: connection refused\n\t127.0.0.1:5432 (localhost): dial error: dial tcp 127.0.0.1:5432: connect: connection refused"}
+{"time":"2025-12-11T17:13:19.360006035+05:30","level":"ERROR","msg":"database connection failed","error":"failed to connect to `user=admin database=userdb`:\n\t[::1]:5432 (localhost): dial error: dial tcp [::1]:5432: connect: connection refused\n\t127.0.0.1:5432 (localhost): dial error: dial tcp 127.0.0.1:5432: connect: connection refused"}
+{"time":"2025-12-11T17:14:38.938980696+05:30","level":"INFO","msg":"starting application"}
+{"time":"2025-12-11T17:14:38.93920048+05:30","level":"INFO","msg":"Loading env file"}
+{"time":"2025-12-11T17:14:38.939338365+05:30","level":"INFO","msg":"connecting to database"}
