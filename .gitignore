@@ -7,3 +7,5 @@ env
 
 #Go files
 go.*
+
+*.Identifier
