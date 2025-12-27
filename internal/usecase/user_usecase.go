@@ -31,6 +31,7 @@ func (s *userService) CreateUser(name, email, password string) error {
 	}
 
 	if err := s.repo.Create(user); err != nil {
+		woodpecker.Logger.Error("failed to create user", "email", user.Email, "error", err)
 		return err
 	}
 	return nil

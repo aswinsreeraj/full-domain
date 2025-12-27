@@ -1,15 +1,12 @@
 package postgres
 
 import (
-	"full-domain/pkg/woodpecker"
 	"full-domain/internal/domain"
 	"log/slog"
 	"os"
 
 	"gorm.io/gorm"
 )
-
-
 
 type userRepository struct {
 	db *gorm.DB
@@ -24,9 +21,6 @@ func (r *userRepository) Create(user *domain.User) error {
 
 	logger.Info("Creating user", "email", user.Email)
 	err := r.db.Create(user).Error
-	if err != nil {
-		woodpecker.Logger.Error("failed to create user", "email", user.Email, "error", err)
-	} // redundant logging
 	return err
 	// Create is better than Save for new records
 	// as it only inserts and does not check for existing records
