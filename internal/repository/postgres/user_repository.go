@@ -26,7 +26,7 @@ func (r *userRepository) Create(user *domain.User) error {
 	err := r.db.Create(user).Error
 	if err != nil {
 		woodpecker.Logger.Error("failed to create user", "email", user.Email, "error", err)
-	}
+	} // redundant logging
 	return err
 	// Create is better than Save for new records
 	// as it only inserts and does not check for existing records
