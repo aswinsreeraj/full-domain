@@ -78,7 +78,3 @@ The project follows the standard Go project layout:
 *   `POST /api/logout` - User logout
 *   `POST /api/users/password` - Update password
 *   `POST /api/admin/login` - Admin login
-
-## 🛡️ License
-
-This project is open-source and available under the [MIT License](LICENSE).
